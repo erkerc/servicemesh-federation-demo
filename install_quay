@@ -1,0 +1,31 @@
+if [ $# -ne 1 ] ; then
+  echo "Usage: $0 <auth>"
+  exit 1
+fi
+
+auth="$1"
+
+DIR=$(cd $(dirname $0) ; pwd -P)
+
+QUAY_DIR=${DIR}/quay
+mkdir -p ${QUAY_DIR}
+(
+  cd ${QUAY_DIR}
+  oc extract secret/pull-secret -n openshift-config  --confirm
+  sed -i .dockerconfigjson -e 's+}}$+,"quay.io/maistra":{"auth":"'"${auth}"'","email":""}}}+'
+  oc set data secret/pull-secret -n openshift-config --from-file=.dockerconfigjson
+
+  oc create -f - << EOF
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: servicemesh-manifests
+  namespace: openshift-marketplace
+spec:
+  sourceType: grpc
+  displayName: Service Mesh Early Access
+  publisher: Early Access
+  image: "quay.io/maistra/servicemesh-olm-iib:2.1-qe"
+  priority: -100
+EOF
+)
