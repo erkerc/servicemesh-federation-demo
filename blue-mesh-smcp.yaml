@@ -1,0 +1,109 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: blue-smcp
+  namespace: blue-istio-system
+spec:
+  version: v2.1
+  cluster:
+    name: blue-cluster
+    network: blue-network
+    multiCluster:
+      enabled: true
+  runtime:
+    defaults:
+      container:
+        # for testing, to ensure we're always using the latest dev image
+        imagePullPolicy: Always
+  addons:
+    grafana:
+      enabled: true
+    kiali:
+      enabled: true
+    prometheus:
+      enabled: true
+  tracing:
+    type: Jaeger
+    sampling: 10000
+  proxy:
+    accessLogging:
+      file:
+        name: /dev/stdout
+  techPreview:
+    meshConfig:
+      defaultConfig:
+        # XXX: needs to be added to global.yaml
+        holdApplicationUntilProxyStarts: false
+        proxyMetadata:
+          # required so proxy handles dns requests, which are delegated to istiod
+          ISTIO_META_DNS_CAPTURE: "true"
+          # required to enable dns capture
+          PROXY_XDS_VIA_AGENT: "true"
+  gateways:
+    additionalEgress:
+      # egress gateway definition for sending requests from blue mesh
+      redmesh-egress:
+        enabled: true
+        requestedNetworkView:
+        # we want to view services on bluemesh network
+        - network-redmesh
+        routerMode: sni-dnat
+        service:
+          metadata:
+            labels:
+              # to prevent mesh2-egress's service from including default egress pods
+              federation.maistra.io/egress-for: redmesh
+          ports:
+          # required for sending service requests to bluemesh
+          - port: 15443
+            name: tls
+          # required for sending discovery requests to bluemesh
+          - port: 8188
+            name: http-discovery
+        runtime:
+          deployment:
+            autoScaling:
+              enabled: false
+          container:
+            # constrain resources for use in smaller environments
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits: {}
+    additionalIngress:
+      # ingress gateway definition for handing requests from mesh2
+      redmesh-ingress:
+        enabled: true
+        routerMode: sni-dnat
+        service:
+          type: LoadBalancer
+          metadata:
+            labels:
+              # to prevent bluemesh-ingress's service from including default ingress pods
+              federation.maistra.io/ingress-for: redmesh
+            annotations:
+              # use the network load balancer on AWS
+              service.beta.kubernetes.io/aws-load-balancer-type: nlb
+          ports:
+          # required for handling service requests from mesh2
+          - port: 15443
+            name: tls
+          # required for handing discovery requests from mesh2
+          - port: 8188
+            name: https-discovery
+        runtime:
+          deployment:
+            autoScaling:
+              enabled: false
+          container:
+            # constrain resources for use in smaller environments
+            resources:
+              requests:
+                cpu: 10m
+                memory: 128Mi
+              limits: {}
+  security:
+    trust:
+      # unique trust domain for this mesh, mesh1
+      domain: bluemesh.local
