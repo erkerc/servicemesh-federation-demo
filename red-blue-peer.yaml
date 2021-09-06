@@ -2,19 +2,19 @@ kind: ServiceMeshPeer
 apiVersion: federation.maistra.io/v1
 metadata:
   name: bm
-  namespace: red-istio-system
+  namespace: red-mesh
 spec:
   remote:
     addresses:
-    - redmesh-ingress-blue-istio-system.apps.cluster-c4bd.c4bd.sandbox1249.opentlc.com
+    - rm-bookinfo-bookinfo-gw-525eca1d5089dbdc-red-mesh.apps.cluster-c4bd.c4bd.sandbox1249.opentlc.com
   gateways:
     ingress:
-      name: bluemesh-ingress
+      name: bmingress
     egress:
-      name: bluemesh-egress
+      name: bmegress
   security:
     trustDomain: bluemesh.local
-    clientID: bluemesh.local/ns/blue-mesh-system/sa/egress-red-mesh-service-account
+    clientID: bluemesh.local/ns/blue-mesh/sa/egress-red-mesh-service-account
     certificateChain:
       kind: ConfigMap
       name: bluemesh-ca-root-cert

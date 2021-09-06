@@ -2,7 +2,7 @@ apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
   name: blue-smcp
-  namespace: blue-istio-system
+  namespace: blue-mesh
 spec:
   version: v2.1
   cluster:
@@ -42,7 +42,7 @@ spec:
   gateways:
     additionalEgress:
       # egress gateway definition for sending requests from blue mesh
-      redmesh-egress:
+      rmegress:
         enabled: true
         requestedNetworkView:
         # we want to view services on bluemesh network
@@ -73,7 +73,7 @@ spec:
               limits: {}
     additionalIngress:
       # ingress gateway definition for handing requests from mesh2
-      redmesh-ingress:
+      rmingress:
         enabled: true
         routerMode: sni-dnat
         service:
