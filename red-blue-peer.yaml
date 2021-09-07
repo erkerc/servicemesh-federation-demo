@@ -6,7 +6,7 @@ metadata:
 spec:
   remote:
     addresses:
-    - rm-bookinfo-bookinfo-gw-525eca1d5089dbdc-red-mesh.apps.cluster-c4bd.c4bd.sandbox1249.opentlc.com
+    - rmingress-blue-mesh.apps.cluster-c4bd.c4bd.sandbox1249.opentlc.com
   gateways:
     ingress:
       name: bmingress
