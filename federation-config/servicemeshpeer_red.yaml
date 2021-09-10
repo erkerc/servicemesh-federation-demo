@@ -1,0 +1,20 @@
+kind: ServiceMeshPeer
+apiVersion: federation.maistra.io/v1
+metadata:
+  name: red-mesh
+  namespace: blue-istio-system
+spec:
+  remote:
+    addresses:
+    - 192.168.192.33
+  gateways:
+    ingress:
+      name: ingress-red-mesh
+    egress:
+      name: egress-red-mesh
+  security:
+    trustDomain: red-mesh.local
+    clientID: red-mesh.local/ns/red-istio-system/sa/egress-blue-mesh-service-account
+    certificateChain:
+      kind: ConfigMap
+      name: red-mesh-ca-root-cert

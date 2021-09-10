@@ -1,0 +1,14 @@
+apiVersion: federation.maistra.io/v1
+kind: ExportedServiceSet
+metadata:
+  name: blue-mesh
+  namespace: red-istio-system
+spec:
+  exportRules:
+  - type: NameSelector
+    nameSelector:
+      namespace: bookinfo
+      name: ratings
+      alias:
+        namespace: bookinfo
+        name: ratings

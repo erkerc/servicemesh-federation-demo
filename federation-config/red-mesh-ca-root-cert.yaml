@@ -1,0 +1,26 @@
+apiVersion: v1
+data:
+  root-cert.pem: |
+    -----BEGIN CERTIFICATE-----
+    MIIC/zCCAeegAwIBAgIRANTZRjFBBsIzsWrQ6r4YMZYwDQYJKoZIhvcNAQELBQAw
+    GTEXMBUGA1UEChMOcmVkLW1lc2gubG9jYWwwHhcNMjEwOTA4MjAxNzQzWhcNMzEw
+    OTA2MjAxNzQzWjAZMRcwFQYDVQQKEw5yZWQtbWVzaC5sb2NhbDCCASIwDQYJKoZI
+    hvcNAQEBBQADggEPADCCAQoCggEBALC3JMNYuIq8ib6S0qO/C7beZTHFc3BFaFP0
+    +AMGxbJPM1cWDekFaefVPgqEnnrZrFi7PgS23pY0u8pfpkinz0POBh3aYFaPWRdv
+    oadQj73yTuaIK+uLj73PCrl8ujdjyR2Fs7Btg+Psuvb2DaU785fgpgKVIihXVuwQ
+    SbgugQT74RoqSnAROpxiuKv1Nf05N9X6zQhfHqZ9k5PYEMAQY6UjBrws4VgjusYm
+    ECt8oAsF4YLUm7j+4PW8y5YkLIw/5IIRbGccnEmmAWbm3X0ngvw20RUe5z58BFcz
+    PwV6lt7CQNgqx1BNHM6BQ8KxMhhOg/KUvMxltkNKaJtd73UidOsCAwEAAaNCMEAw
+    DgYDVR0PAQH/BAQDAgIEMA8GA1UdEwEB/wQFMAMBAf8wHQYDVR0OBBYEFJBbM1R6
+    0TZc4oxWkQVCcmuxd88zMA0GCSqGSIb3DQEBCwUAA4IBAQB7o2k2yeST3gpOOgx0
+    Woem8rpYPtRe+gngM+VvFwSVFsZ9a8uZpQwX4F9HNaxuJA0zgR+Pro7K77K9voxM
+    LF0W6MZjNPk0j2ZGrcgyQdTjZBKpEZPkhUDjgNbA0vwIhr3j9d3GdPKXw6OlALlh
+    EUZNFW4AbTqTTtTLlxBWcBhngt4FqxaEFreOLvFNQX6LQ0qcsgnhE15HoQH4xVDU
+    z7HkRPTb9zVS+WodfOPLEy1GTcNWbHip7Z8SPWMawmhZ+vNIie3+Gt68Fx8Ujq6c
+    2TIr3qOsxrT+jolYE1bAcMUqvfb40B15mqkN0wQdzxYHyvj2SPPc++MDRwqblxFI
+    e4F8
+    -----END CERTIFICATE-----
+kind: ConfigMap
+metadata:
+  name: red-mesh-ca-root-cert
+  namespace: blue-istio-system

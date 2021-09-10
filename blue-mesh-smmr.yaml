@@ -1,0 +1,8 @@
+apiVersion: maistra.io/v1
+kind: ServiceMeshMemberRoll
+metadata:
+  namespace: blue-mesh
+  name: default
+spec:
+  members:
+    - bm-bookinfo

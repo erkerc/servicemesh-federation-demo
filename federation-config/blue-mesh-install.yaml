@@ -1,0 +1,52 @@
+apiVersion: maistra.io/v2
+kind: ServiceMeshControlPlane
+metadata:
+  name: blue-mesh
+  namespace: blue-istio-system
+spec:
+  addons:
+    jaeger:
+      install:
+        storage:
+          type: Memory
+  version: v2.1
+  cluster:
+    name: blue-cluster
+    network: blue-network
+  runtime:
+    defaults:
+      container:
+        imagePullPolicy: Always
+  gateways:
+    additionalEgress:
+      egress-red-mesh:
+        enabled: true
+        requestedNetworkView:
+        - red-network
+        routerMode: sni-dnat
+        service:
+          metadata:
+            labels:
+              federation.maistra.io/proxy: egress-red-mesh
+          ports:
+          - port: 15443
+            name: tls
+          - port: 8188
+            name: http-discovery
+    additionalIngress:
+      ingress-red-mesh:
+        enabled: true
+        routerMode: sni-dnat
+        service:
+          type: LoadBalancer
+          metadata:
+            labels:
+              federation.maistra.io/proxy: ingress-red-mesh
+          ports:
+          - port: 15443
+            name: tls
+          - port: 8188
+            name: https-discovery
+  security:
+    trust:
+      domain: blue-mesh.local

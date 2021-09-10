@@ -1,0 +1,16 @@
+kind: ImportedServiceSet
+apiVersion: federation.maistra.io/v1
+metadata:
+  name: red-mesh
+  namespace: blue-istio-system
+spec:
+  importRules:
+  - type: NameSelector
+    importAsLocal: true
+    nameSelector:
+      namespace: bookinfo
+      name: ratings
+      alias:
+        namespace: bookinfo
+        name: ratings
+
