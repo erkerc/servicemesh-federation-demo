@@ -1,8 +1,8 @@
 apiVersion: maistra.io/v1
 kind: ServiceMeshMemberRoll
 metadata:
-  namespace: red-mesh
+  namespace: red-istio-system
   name: default
 spec:
   members:
-    - rm-bookinfo
+    - bookinfo
