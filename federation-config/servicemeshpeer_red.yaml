@@ -6,7 +6,7 @@ metadata:
 spec:
   remote:
     addresses:
-    - 192.168.192.33
+    - 192.168.192.37
   gateways:
     ingress:
       name: ingress-red-mesh
