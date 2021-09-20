@@ -6,7 +6,7 @@ export BLUEMESH_CERT=$(oc get configmap -n blue-istio-system istio-ca-root-cert 
 echo $BLUEMESH_CERT > bluemesh_cert
 
 # create Blue Mesh Cert in red-istio-system
-oc create cm bluemesh-ca-root-cert --from-file=root-cert.pem=bluemesh_cert -n red-mesh
+oc create cm bluemesh-ca-root-cert --from-file=root-cert.pem=bluemesh_cert -n red-istio-system
 
 # create Red Mesh Cert in blue-istio-system
-oc create cm redmesh-ca-root-cert --from-file=root-cert.pem=redmesh_cert -n blue-mesh
+oc create cm redmesh-ca-root-cert --from-file=root-cert.pem=redmesh_cert -n blue-istio-system
