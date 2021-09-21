@@ -13,6 +13,8 @@ spec:
   cluster:
     name: blue-cluster
     network: blue-network
+    multiCluster:
+      enabled: true
   runtime:
     defaults:
       container:

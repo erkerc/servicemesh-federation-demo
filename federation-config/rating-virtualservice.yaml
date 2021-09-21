@@ -1,0 +1,16 @@
+kind: VirtualService
+apiVersion: networking.istio.io/v1alpha3
+metadata:
+  name: ratings-split
+  namespace: bookinfo
+spec:
+  hosts:
+    - ratings.bookinfo.svc.cluster.local
+  http:
+    - route:
+        - destination:
+            host: ratings.bookinfo.svc.blue-mesh.local
+          weight: 50
+        - destination:
+            host: ratings.bookinfo.svc.cluster.local
+          weight: 50

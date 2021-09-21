@@ -6,7 +6,7 @@ metadata:
 spec:
   remote:
     addresses:
-    - 192.168.192.26
+    - 192.168.192.27
   gateways:
     ingress:
       name: ingress-blue-mesh
@@ -17,4 +17,4 @@ spec:
     clientID: blue-mesh.local/ns/blue-istio-system/sa/egress-red-mesh-service-account
     certificateChain:
       kind: ConfigMap
-      name: blue-mesh-ca-root-cert
+      name: bluemesh-ca-root-cert

@@ -17,4 +17,4 @@ spec:
     clientID: red-mesh.local/ns/red-istio-system/sa/egress-blue-mesh-service-account
     certificateChain:
       kind: ConfigMap
-      name: red-mesh-ca-root-cert
+      name: redmesh-ca-root-cert

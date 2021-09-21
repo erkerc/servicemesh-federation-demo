@@ -1,9 +1,13 @@
 # Install?  Retrieve?  common root certificate authority (CA) in Red Mesh  
-export REDMESH_CERT=$(oc get configmap -n red-istio-system istio-ca-root-cert -o jsonpath='{.data.root-cert\.pem}' | sed ':a;N;$!ba;s/\n/\\\n      /g')
-echo $REDMESH_CERT > redmesh_cert
+oc get configmap -n red-istio-system istio-ca-root-cert -o jsonpath='{.data.root-cert\.pem}' | sed ':a;N;$!ba;s/\n/\\\n      /g' > redmesh_cert
+
+openssl x509 -in redmesh_cert -text -noout
+
 # Install?  Retrieve?  common root certificate authority (CA) in Blue Mesh  
-export BLUEMESH_CERT=$(oc get configmap -n blue-istio-system istio-ca-root-cert -o jsonpath='{.data.root-cert\.pem}' | sed ':a;N;$!ba;s/\n/\\\n      /g')
-echo $BLUEMESH_CERT > bluemesh_cert
+oc get configmap -n blue-istio-system istio-ca-root-cert -o jsonpath='{.data.root-cert\.pem}' | sed ':a;N;$!ba;s/\n/\\\n      /g' > bluemesh_cert
+
+openssl x509 -in bluemesh_cert -text -noout
+
 
 # create Blue Mesh Cert in red-istio-system
 oc create cm bluemesh-ca-root-cert --from-file=root-cert.pem=bluemesh_cert -n red-istio-system
