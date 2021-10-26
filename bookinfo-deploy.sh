@@ -9,4 +9,5 @@ oc label deployment/ratings-v1 app.openshift.io/runtime=nodejs
 oc label deployment/details-v1 app.openshift.io/runtime=ruby 
 oc annotate deployment/productpage-v1 app.openshift.io/connects-to=reviews-v1,reviews-v2,reviews-v3,details-v1 --overwrite
 oc annotate deployment/reviews-v2 app.openshift.io/connects-to=ratings-v1 --overwrite
+oc annotate deployment/reviews-v3 app.openshift.io/connects-to=ratings-v1 --overwrite
 
