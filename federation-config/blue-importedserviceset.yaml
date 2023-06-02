@@ -2,7 +2,7 @@ kind: ImportedServiceSet
 apiVersion: federation.maistra.io/v1
 metadata:
   name: red-mesh
-  namespace: blue-istio-system
+  namespace: blue-mesh-system
 spec:
   importRules:
   - type: NameSelector

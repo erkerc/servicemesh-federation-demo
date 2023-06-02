@@ -23,4 +23,4 @@ data:
 kind: ConfigMap
 metadata:
   name: red-mesh-ca-root-cert
-  namespace: blue-istio-system
+  namespace: blue-mesh-system

@@ -2,7 +2,7 @@ apiVersion: federation.maistra.io/v1
 kind: ExportedServiceSet
 metadata:
   name: red-mesh
-  namespace: blue-istio-system
+  namespace: blue-mesh-system
 spec:
   exportRules:
   - type: NameSelector

@@ -9,7 +9,7 @@ spec:
   http:
     - route:
         - destination:
-            host: ratings.bookinfo.svc.blue-mesh.local
+            host: ratings.bookinfo.svc.blue-mesh-imports.local
           weight: 50
         - destination:
             host: ratings.bookinfo.svc.cluster.local

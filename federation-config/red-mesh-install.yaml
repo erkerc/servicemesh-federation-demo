@@ -2,33 +2,20 @@ apiVersion: maistra.io/v2
 kind: ServiceMeshControlPlane
 metadata:
   name: red-mesh
-  namespace: red-istio-system
+  namespace: red-mesh-system
 spec:
-  addons:
-    jaeger:
-      install:
-        storage:
-          type: Memory
-  version: v2.1
-  cluster:
-    name: red-cluster
-    network: red-network
-    multiCluster:
-      enabled: true
+  version: v2.3
   runtime:
     defaults:
       container:
         imagePullPolicy: Always
-  techPreview:
-    meshConfig:
-      defaultConfig:
-        # XXX: needs to be added to global.yaml
-        holdApplicationUntilProxyStarts: false
-        proxyMetadata:
-          # required so proxy handles dns requests, which are delegated to istiod
-          ISTIO_META_DNS_CAPTURE: "true"
-          # required to enable dns capture
-          PROXY_XDS_VIA_AGENT: "true"
+  addons:
+    kiali:
+      enabled: true
+      install:
+        dashboard:
+          enableGrafana: true
+          enableTracing: true
   gateways:
     additionalEgress:
       egress-blue-mesh:
@@ -39,12 +26,12 @@ spec:
         service:
           metadata:
             labels:
-              federation.maistra.io/proxy: egress-blue-mesh
+              federation.maistra.io/egress-for: egress-blue-mesh
           ports:
           - port: 15443
             name: tls
           - port: 8188
-            name: http-discovery
+            name: http-discovery  #note HTTP here
     additionalIngress:
       ingress-blue-mesh:
         enabled: true
@@ -53,12 +40,12 @@ spec:
           type: LoadBalancer
           metadata:
             labels:
-              federation.maistra.io/proxy: ingress-blue-mesh
+              federation.maistra.io/ingress-for: ingress-blue-mesh
           ports:
           - port: 15443
             name: tls
           - port: 8188
-            name: https-discovery
+            name: https-discovery  #note HTTPS here
   security:
     trust:
       domain: red-mesh.local

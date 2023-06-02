@@ -1,6 +1,6 @@
 oc create -n bookinfo -f  bookinfo/bookinfo-deployment.yaml
 oc create -n bookinfo -f  bookinfo/bookinfo-gateway.yaml
-oc create -n bookinfo -f  bookinfo/bookinfo-destinationrules-all-mtls.yaml
+oc create -n bookinfo -f  bookinfo/bookinfo-destinationrules-all.yaml
 oc label deployment/productpage-v1 app.openshift.io/runtime=python
 oc label deployment/reviews-v1 app.openshift.io/runtime=java
 oc label deployment/reviews-v2 app.openshift.io/runtime=java

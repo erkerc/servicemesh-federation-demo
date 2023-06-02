@@ -1,7 +1,7 @@
 apiVersion: maistra.io/v1
 kind: ServiceMeshMemberRoll
 metadata:
-  namespace: red-istio-system
+  namespace: red-mesh-system
   name: default
 spec:
   members:
